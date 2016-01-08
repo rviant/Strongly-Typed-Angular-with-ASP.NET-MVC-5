@@ -1,0 +1,21 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Coverters;
+using Newtonsoft.Json.Serialization;
+
+namespace HeroicCRM.Web.Utilities
+{
+	public static class JsonExtensions
+	{
+		Public static string ToJson<T>(this T obj, bool includeNull = true)
+		{
+			var settings = new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver(),
+				Converters = new JsonConverter[] {new StringEnumConverter() },
+				NullValueHandling = includeNull ? NullValueHandling.Include : NullValueHandling
+			};
+			
+			return JsonConverter.SerializeObject(obj, settings);
+		}
+	}
+}
